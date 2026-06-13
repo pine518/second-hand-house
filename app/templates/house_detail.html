@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}房源详情 - 二手房数据分析系统{% endblock %}
+
+{% block content %}
+<section class="page-title">
+  <div class="container">
+    <h1>{{ house.title }}</h1>
+    <p>{{ house.city }} · {{ house.district or '未知区域' }} · {{ house.community or '未知小区' }}</p>
+  </div>
+</section>
+
+<section class="container content-section">
+  <div class="detail-layout">
+    <div class="detail-main">
+      <div class="detail-price">
+        <div><strong>{{ house.total_price or '-' }}</strong><span>万</span></div>
+        <div><strong>{{ house.unit_price or '-' }}</strong><span>元/平</span></div>
+      </div>
+      <div class="detail-grid">
+        <div><span>面积</span><strong>{{ house.area or '-' }} ㎡</strong></div>
+        <div><span>户型</span><strong>{{ house.room_count or '-' }}室{{ house.hall_count or '-' }}厅</strong></div>
+        <div><span>楼层</span><strong>{{ house.floor or '-' }}</strong></div>
+        <div><span>朝向</span><strong>{{ house.orientation or '-' }}</strong></div>
+        <div><span>装修</span><strong>{{ house.decoration or '-' }}</strong></div>
+        <div><span>建筑年代</span><strong>{{ house.build_year or '-' }}</strong></div>
+      </div>
+    </div>
+    <aside class="detail-side">
+      <h2>数据来源</h2>
+      <p>来源 URL 设置唯一索引，重复采集时会更新已有数据。</p>
+      <a class="btn btn-outline-main w-100" href="{{ house.source_url }}" target="_blank" rel="noopener">打开来源页面</a>
+      <a class="btn btn-primary-main w-100 mt-3" href="/houses">返回列表</a>
+    </aside>
+  </div>
+</section>
+{% endblock %}

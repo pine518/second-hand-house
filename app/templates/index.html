@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 二手房数据分析系统{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <h1>二手房数据采集与可视化分析系统</h1>
+        <p class="hero-text">
+          从公开房源采集、清洗入库到统计分析和图表展示，第一阶段 MVP 已形成可本地运行的完整闭环。
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="/houses" class="btn btn-primary-main">查看房源</a>
+          <a href="/analysis" class="btn btn-outline-main">查看分析</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="hero-panel">
+          <div class="panel-line"></div>
+          <div class="panel-row">
+            <span>数据源</span>
+            <strong>单网站 MVP</strong>
+          </div>
+          <div class="panel-row">
+            <span>数据处理</span>
+            <strong>清洗 + 去重</strong>
+          </div>
+          <div class="panel-row">
+            <span>分析输出</span>
+            <strong>ECharts 图表</strong>
+          </div>
+          <div class="panel-row">
+            <span>部署方式</span>
+            <strong>本地 MySQL</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container content-section">
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="metric-card">
+        <span>房源总量</span>
+        <strong>{{ metrics.total }}</strong>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card">
+        <span>覆盖区域</span>
+        <strong>{{ metrics.district_count }}</strong>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card">
+        <span>均价</span>
+        <strong>{{ metrics.avg_unit_price }}</strong>
+        <small>元/平</small>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="metric-card">
+        <span>平均总价</span>
+        <strong>{{ metrics.avg_total_price }}</strong>
+        <small>万</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container content-section">
+  <div class="section-heading">
+    <h2>第一阶段能力</h2>
+    <p>优先保证系统可运行、数据可进入、页面可访问、图表可分析。</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="feature-card">
+        <h3>数据采集</h3>
+        <p>Requests 基础爬虫支持分页、重试、频率控制和采集日志。</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <h3>清洗入库</h3>
+        <p>价格、面积、户型、年代标准化处理，基于来源 URL 去重。</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <h3>可视化分析</h3>
+        <p>区域均价、房源数量、总价区间和面积价格关系图表化展示。</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

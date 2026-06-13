@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}数据分析 - 二手房数据分析系统{% endblock %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<section class="page-title">
+  <div class="container">
+    <h1>数据分析</h1>
+    <p>通过区域、价格和面积维度观察二手房市场分布。</p>
+  </div>
+</section>
+
+<section class="container content-section">
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h2>区域均价</h2>
+        <div id="avgPriceChart" class="chart-box"></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h2>区域房源数量</h2>
+        <div id="countChart" class="chart-box"></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h2>总价区间分布</h2>
+        <div id="priceRangeChart" class="chart-box"></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card">
+        <h2>面积与总价关系</h2>
+        <div id="scatterChart" class="chart-box"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/charts.js') }}"></script>
+<script src="{{ url_for('static', path='/js/analysis.js') }}"></script>
+{% endblock %}

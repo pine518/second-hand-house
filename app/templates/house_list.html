@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}房源列表 - 二手房数据分析系统{% endblock %}
+
+{% block content %}
+<section class="page-title">
+  <div class="container">
+    <h1>房源列表</h1>
+    <p>按城市、区域、价格、面积和户型筛选房源数据。</p>
+  </div>
+</section>
+
+<section class="container content-section">
+  <form class="filter-bar" method="get" action="/houses">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-2">
+        <label class="form-label">城市</label>
+        <select name="city" class="form-select">
+          <option value="">全部</option>
+          {% for city in options.cities %}
+          <option value="{{ city }}" {% if filters.city == city %}selected{% endif %}>{{ city }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">区域</label>
+        <select name="district" class="form-select">
+          <option value="">全部</option>
+          {% for district in options.districts %}
+          <option value="{{ district }}" {% if filters.district == district %}selected{% endif %}>{{ district }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">最低总价</label>
+        <input name="min_price" class="form-control" value="{{ filters.min_price or '' }}" placeholder="万">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">最高总价</label>
+        <input name="max_price" class="form-control" value="{{ filters.max_price or '' }}" placeholder="万">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">最低面积</label>
+        <input name="min_area" class="form-control" value="{{ filters.min_area or '' }}" placeholder="㎡">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">最高面积</label>
+        <input name="max_area" class="form-control" value="{{ filters.max_area or '' }}" placeholder="㎡">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">户型</label>
+        <select name="room_count" class="form-select">
+          <option value="">全部</option>
+          {% for room in options.rooms %}
+          <option value="{{ room }}" {% if filters.room_count == room %}selected{% endif %}>{{ room }} 室</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2 d-flex gap-2">
+        <button class="btn btn-primary-main flex-fill" type="submit">筛选</button>
+        <a class="btn btn-outline-main" href="/houses">重置</a>
+      </div>
+    </div>
+  </form>
+
+  <div class="list-meta">
+    <span>共 {{ result.total }} 条房源</span>
+    <span>第 {{ result.page }} / {{ result.pages }} 页</span>
+  </div>
+
+  {% if result.items %}
+  <div class="house-grid">
+    {% for house in result.items %}
+    <article class="house-card">
+      <div class="house-card-main">
+        <h2><a href="/houses/{{ house.id }}">{{ house.title }}</a></h2>
+        <p>{{ house.city }} · {{ house.district or '未知区域' }} · {{ house.community or '未知小区' }}</p>
+        <div class="house-tags">
+          <span>{{ house.room_count or '-' }}室{{ house.hall_count or '-' }}厅</span>
+          <span>{{ house.area or '-' }}㎡</span>
+          <span>{{ house.orientation or '朝向未知' }}</span>
+          <span>{{ house.decoration or '装修未知' }}</span>
+        </div>
+      </div>
+      <div class="house-price">
+        <strong>{{ house.total_price or '-' }}</strong><span>万</span>
+        <small>{{ house.unit_price or '-' }} 元/平</small>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <nav class="pagination-wrap">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if result.page <= 1 %}disabled{% endif %}">
+        <a class="page-link" href="/houses?{{ prev_query }}">上一页</a>
+      </li>
+      <li class="page-item disabled">
+        <span class="page-link">{{ result.page }} / {{ result.pages }}</span>
+      </li>
+      <li class="page-item {% if result.page >= result.pages %}disabled{% endif %}">
+        <a class="page-link" href="/houses?{{ next_query }}">下一页</a>
+      </li>
+    </ul>
+  </nav>
+  {% else %}
+  <div class="empty-state">
+    <h2>暂无房源数据</h2>
+    <p>请先运行爬虫脚本，或使用样例数据完成本地闭环验证。</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
